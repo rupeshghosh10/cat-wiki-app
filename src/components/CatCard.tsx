@@ -1,11 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { StackParamList } from '../Main';
 import { getImage } from '../api';
 import { Card } from '../interfaces';
 import { colors, spacing } from '../themes';
 
-const CatCard = ({ name, imageId }: Card) => {
+const CatCard = ({ id, name, imageId }: Card) => {
   const [imageUrl, setImageUrl] = useState('');
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
   useEffect(() => {
     async function fetchImage(imageId: string) {
@@ -15,13 +19,19 @@ const CatCard = ({ name, imageId }: Card) => {
     fetchImage(imageId);
   }, [imageId, setImageUrl]);
 
+  function handlePress() {
+    navigation.navigate('CatDetails', { id: id, name: name });
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        {imageUrl.length !== 0 && <Image source={{ uri: imageUrl }} style={styles.image} />}
+    <Pressable onPress={handlePress}>
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          {imageUrl.length !== 0 && <Image source={{ uri: imageUrl }} style={styles.image} />}
+        </View>
+        <Text style={styles.text}>{name}</Text>
       </View>
-      <Text style={styles.text}>{name}</Text>
-    </View>
+    </Pressable>
   );
 };
 

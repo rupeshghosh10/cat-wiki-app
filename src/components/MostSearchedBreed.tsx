@@ -22,7 +22,7 @@ const data: Card[] = [
   {
     id: 'ragd',
     name: 'Ragdoll',
-    imageId: 'Rhj-JsTLP',
+    imageId: 'oGefY4YoG',
   },
 ];
 

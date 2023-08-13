@@ -1,11 +1,17 @@
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { StackParamList } from '../Main';
 import { getCat, getImage } from '../api';
 import CatDescription from '../components/CatDescription';
 import { Cat, CatImage } from '../interfaces';
 import { colors, spacing } from '../themes';
 
-const CatDetailsSCreen = () => {
+type Props = NativeStackScreenProps<StackParamList, 'CatDetails'>;
+
+const CatDetailsScreen = ({ route }: Props) => {
+  const { id } = route.params;
+
   const [imageUrl, setImageUrl] = useState<CatImage>();
   const [catData, setCatData] = useState<Cat>();
 
@@ -14,7 +20,9 @@ const CatDetailsSCreen = () => {
       const cat = await getCat(id);
       setCatData(cat);
     }
-    fetchCatData('pers');
+    if (id !== '') {
+      fetchCatData(id);
+    }
   }, [setCatData]);
 
   useEffect(() => {
@@ -63,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CatDetailsSCreen;
+export default CatDetailsScreen;
