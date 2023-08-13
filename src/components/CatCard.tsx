@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: colors.accent,
     borderRadius: 30,
+    width: 180,
+    height: 180,
   },
   image: {
     borderRadius: 30,

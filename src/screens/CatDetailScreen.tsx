@@ -1,6 +1,6 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { StackParamList } from '../Main';
 import { getCat, getImage } from '../api';
 import CatDescription from '../components/CatDescription';
@@ -14,6 +14,7 @@ const CatDetailsScreen = ({ route }: Props) => {
 
   const [imageUrl, setImageUrl] = useState<CatImage>();
   const [catData, setCatData] = useState<Cat>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCatData(id: string) {
@@ -32,8 +33,17 @@ const CatDetailsScreen = ({ route }: Props) => {
     }
     if (catData) {
       fetchImage(catData.reference_image_id);
+      setLoading(false);
     }
-  }, [setImageUrl, catData]);
+  }, [setImageUrl, catData, setLoading]);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={colors.secondary} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -56,6 +66,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: spacing.sm,
     backgroundColor: colors.accent,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   imageContainer: {
     height: 300,
