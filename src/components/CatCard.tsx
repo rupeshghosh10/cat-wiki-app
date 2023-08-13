@@ -6,9 +6,11 @@ import { StackParamList } from '../Main';
 import { getImage } from '../api';
 import { Card } from '../interfaces';
 import { colors, spacing } from '../themes';
+import Loading from './Loading';
 
 const CatCard = ({ id, name, imageId }: Card) => {
   const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
   useEffect(() => {
@@ -27,7 +29,18 @@ const CatCard = ({ id, name, imageId }: Card) => {
     <Pressable onPress={handlePress}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {imageUrl.length !== 0 && <Image source={{ uri: imageUrl }} style={styles.image} />}
+          {imageUrl.length !== 0 && (
+            <Image
+              source={{ uri: imageUrl }}
+              style={styles.image}
+              onLoadEnd={() => setLoading(false)}
+            />
+          )}
+          {loading && (
+            <View style={styles.loading}>
+              <Loading />
+            </View>
+          )}
         </View>
         <Text style={styles.text}>{name}</Text>
       </View>
@@ -49,6 +62,12 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: 180,
     height: 180,
+  },
+  loading: {
+    position: 'absolute',
+    top: '40%',
+    left: '40%',
+    zIndex: 1,
   },
   image: {
     borderRadius: 30,
