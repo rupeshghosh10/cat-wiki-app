@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { colors } from '../themes/color';
-import { spacing } from '../themes/spacing';
+import { colors, spacing } from '../themes';
 
 interface CatDescriptionStatProps {
   title: string;

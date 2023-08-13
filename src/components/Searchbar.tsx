@@ -1,8 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { colors } from '../themes/color';
-import { spacing } from '../themes/spacing';
+import { colors, spacing } from '../themes';
 
 const searchBar = () => {
   const [searchText, setSearchText] = useState('');

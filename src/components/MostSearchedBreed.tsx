@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { Card } from '../interfaces/Card';
-import { colors } from '../themes/color';
-import { spacing } from '../themes/spacing';
+import { Card } from '../interfaces';
+import { colors, spacing } from '../themes';
 import CatCard from './CatCard';
 
 const data: Card[] = [

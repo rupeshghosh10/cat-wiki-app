@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Cat } from '../interfaces/Cat';
-import { colors } from '../themes/color';
-import { spacing } from '../themes/spacing';
+import { Cat } from '../interfaces';
+import { colors, spacing } from '../themes';
 import CatDescriptionItem from './CatDescriptionItem';
 import CatDescriptionStat from './CatDescriptionStat';
 

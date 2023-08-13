@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
-import { getCat } from '../api/catApi';
-import { getImage } from '../api/imagesApi';
+import { getCat, getImage } from '../api';
 import CatDescription from '../components/CatDescription';
-import { Cat } from '../interfaces/Cat';
-import { CatImage } from '../interfaces/CatImage';
-import { colors } from '../themes/color';
-import { spacing } from '../themes/spacing';
+import { Cat, CatImage } from '../interfaces';
+import { colors, spacing } from '../themes';
 
 const CatDetailsSCreen = () => {
   const [imageUrl, setImageUrl] = useState<CatImage>();

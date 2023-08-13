@@ -1,9 +1,9 @@
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CatWikiHeader from '../components/CatWikiHeader';
-import Searchbar from '../components/Searchbar';
 import MostSearchedBreed from '../components/MostSearchedBreed';
-import { spacing } from '../themes/spacing';
+import Searchbar from '../components/Searchbar';
+import { spacing } from '../themes';
 
 const HomeScreen = () => {
   return (

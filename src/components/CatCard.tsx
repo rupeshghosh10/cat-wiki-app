@@ -1,9 +1,8 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { Card } from '../interfaces/Card';
-import { colors } from '../themes/color';
-import { spacing } from '../themes/spacing';
 import { useEffect, useState } from 'react';
-import { getImage } from '../api/imagesApi';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { getImage } from '../api';
+import { Card } from '../interfaces';
+import { colors, spacing } from '../themes';
 
 const CatCard = ({ name, imageId }: Card) => {
   const [imageUrl, setImageUrl] = useState('');
