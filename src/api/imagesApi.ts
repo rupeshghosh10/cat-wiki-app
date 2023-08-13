@@ -1,7 +1,7 @@
 import { CatImage } from '../interfaces/CatImage';
 import instance from './instance';
 
-export async function getImageById(imageId: string) {
-  const response = await instance.get<CatImage>(`images/${imageId}`);
+export async function getImage(id: string) {
+  const response = await instance.get<CatImage>(`images/${id}`);
   return response.data;
 }

@@ -3,14 +3,14 @@ import { Card } from '../interfaces/Card';
 import { colors } from '../themes/color';
 import { spacing } from '../themes/spacing';
 import { useEffect, useState } from 'react';
-import { getImageById } from '../api/imagesApi';
+import { getImage } from '../api/imagesApi';
 
 const CatCard = ({ name, imageId }: Card) => {
   const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
     async function fetchImage(imageId: string) {
-      const image = await getImageById(imageId);
+      const image = await getImage(imageId);
       setImageUrl(image.url);
     }
     fetchImage(imageId);
