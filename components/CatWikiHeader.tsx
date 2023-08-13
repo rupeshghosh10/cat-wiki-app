@@ -1,5 +1,6 @@
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../themes/color';
+import { spacing } from '../themes/spacing';
 
 const CatWikiHeader = () => {
   return (
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     width: '50%',
     height: '100%',
     justifyContent: 'space-evenly',
-    marginLeft: 16,
+    marginLeft: spacing.md,
   },
   textHeading: {
     color: colors.lightGray,

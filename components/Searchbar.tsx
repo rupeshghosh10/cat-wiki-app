@@ -2,6 +2,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { colors } from '../themes/color';
+import { spacing } from '../themes/spacing';
 
 const searchBar = () => {
   const [searchText, setSearchText] = useState('');
@@ -38,14 +39,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   searchIcon: {
-    marginLeft: 12,
+    marginLeft: spacing.sm,
   },
   cancelIcon: {
-    marginRight: 12,
+    marginRight: spacing.sm,
   },
   searchBar: {
-    paddingVertical: 14,
-    paddingHorizontal: 12,
+    padding: spacing.sm,
     flex: 1,
     fontWeight: '600',
   },

@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../themes/color';
 import CatCard from './CatCard';
+import { spacing } from '../themes/spacing';
 
 export interface Cat {
   type: string;
@@ -47,15 +48,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.accent,
     height: 500,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
   },
   title: {
     color: colors.primary,
     fontWeight: '600',
     fontSize: 22,
-    marginBottom: 8,
-    marginLeft: 5,
+    marginBottom: spacing.xs,
+    marginLeft: spacing.xxs,
     textDecorationLine: 'underline',
     textDecorationColor: colors.primary,
   },

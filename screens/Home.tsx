@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CatWikiHeader from '../components/CatWikiHeader';
 import Searchbar from '../components/Searchbar';
 import MostSearchedBreed from '../components/MostSearchedBreed';
+import { spacing } from '../themes/spacing';
 
 const Home = () => {
   return (
@@ -23,10 +24,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchContainer: {
-    margin: 12,
+    margin: spacing.sm,
   },
   bodyContainer: {
-    margin: 12,
+    margin: spacing.sm,
     borderRadius: 30,
     overflow: 'hidden',
   },
