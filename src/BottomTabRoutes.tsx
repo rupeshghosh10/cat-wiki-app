@@ -3,9 +3,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CatListScreen from './screens/CatListScreen';
 import FavoriteScreen from './screens/FavoriteScreen';
 import HomeScreen from './screens/HomeScreen';
+import SearchScreen from './screens/SearchScreen';
 import { colors } from './themes/color';
 
-const BottomTab = createBottomTabNavigator();
+export type BottomTabParamsList = {
+  Home: undefined;
+  Search: undefined;
+  CatList: undefined;
+  Favorite: undefined;
+};
+
+const BottomTab = createBottomTabNavigator<BottomTabParamsList>();
 
 const BottomTabRoutes = () => {
   return (
@@ -21,6 +29,13 @@ const BottomTabRoutes = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ size, color }) => <FontAwesome5 name="home" size={size} color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          tabBarIcon: ({ size, color }) => <FontAwesome5 name="search" size={size} color={color} />,
         }}
       />
       <BottomTab.Screen

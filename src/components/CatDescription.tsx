@@ -16,6 +16,7 @@ const CatDescription = (cat: Cat) => {
       <CatDescriptionItem title="Origin" description={cat.origin} />
       <CatDescriptionItem title="Life Span" description={`${cat.life_span} years`} />
       <CatDescriptionItem title="Weight" description={`${cat.weight} Kg`} />
+      <View style={styles.bottomMargin}></View>
       <CatDescriptionStat title="Adaptability" value={cat.adaptability} />
       <CatDescriptionStat title="Affection Level " value={cat.affection_level} />
       <CatDescriptionStat title="Child Friendly" value={cat.child_friendly} />
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   bottomMargin: {
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
 });
 
