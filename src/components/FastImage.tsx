@@ -1,59 +1,44 @@
 import * as FileSystem from 'expo-file-system';
 import { useEffect, useState } from 'react';
 import { Image, ImageStyle, StyleProp } from 'react-native';
+import { getImage } from '../api';
+import { cacheImage, findImageInCache } from '../services';
+import Loading from './Loading';
 
 interface FastImageProps {
-  uri: string;
-  key: string;
+  imageId: string;
   style: StyleProp<ImageStyle>;
 }
 
-const FastImage = ({ uri, key, style }: FastImageProps) => {
+const FastImage = ({ imageId, style }: FastImageProps) => {
   const [imageSource, setImageSource] = useState('');
 
-  function getImageExtension(uri: string) {
-    const basename = uri.split(/[\\/]/).pop()!;
-    return /[.]/.exec(basename) ? /[^.]+$/.exec(basename) : undefined;
-  }
-
-  async function findImageInCache(uri: string) {
+  async function fetchImageUrl(imageId: string) {
     try {
-      const info = await FileSystem.getInfoAsync(uri);
-      return info;
-    } catch (error) {
+      const image = await getImage(imageId);
       return {
-        exists: false,
-      };
-    }
-  }
-
-  async function cacheImage(uri: string, cacheUri: string) {
-    try {
-      const downloadImage = FileSystem.createDownloadResumable(uri, cacheUri, {});
-      const downloaded = await downloadImage.downloadAsync();
-      return {
-        cached: true,
-        path: downloaded!.uri,
+        imageUrl: image.url,
+        fetched: true,
       };
     } catch (error) {
       return {
-        cached: false,
+        fetched: false,
       };
     }
   }
 
   useEffect(() => {
     async function loadImage() {
-      const imageExtension = getImageExtension(uri);
-      if (!imageExtension || !imageExtension.length) {
-        return;
-      }
-      const cacheFileUri = `${FileSystem.cacheDirectory}${key}.${imageExtension[0]}`;
+      const cacheFileUri = `${FileSystem.cacheDirectory}${imageId}.jpg`;
       const imageInCache = await findImageInCache(cacheFileUri);
       if (imageInCache.exists) {
         setImageSource(cacheFileUri);
       } else {
-        const cached = await cacheImage(uri, cacheFileUri);
+        const image = await fetchImageUrl(imageId);
+        if (!image.fetched) {
+          return;
+        }
+        const cached = await cacheImage(image.imageUrl!, cacheFileUri);
         if (cached.cached) {
           setImageSource(cached.path!);
         }
@@ -62,7 +47,15 @@ const FastImage = ({ uri, key, style }: FastImageProps) => {
     loadImage();
   }, []);
 
-  return <Image source={{ uri: imageSource }} style={style} />;
+  return (
+    <>
+      {imageSource.length !== 0 ? (
+        <Image source={{ uri: imageSource }} style={style} />
+      ) : (
+        <Loading />
+      )}
+    </>
+  );
 };
 
 export default FastImage;

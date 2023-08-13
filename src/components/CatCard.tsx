@@ -1,25 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useEffect, useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { StackParamList } from '../Main';
-import { getImage } from '../api';
 import { Card } from '../interfaces';
 import { colors, spacing } from '../themes';
-import Loading from './Loading';
+import FastImage from './FastImage';
 
 const CatCard = ({ id, name, imageId }: Card) => {
-  const [imageUrl, setImageUrl] = useState('');
-  const [loading, setLoading] = useState(true);
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
-
-  useEffect(() => {
-    async function fetchImage(imageId: string) {
-      const image = await getImage(imageId);
-      setImageUrl(image.url);
-    }
-    fetchImage(imageId);
-  }, [imageId, setImageUrl]);
 
   function handlePress() {
     navigation.navigate('CatDetails', { id: id, name: name });
@@ -29,18 +17,7 @@ const CatCard = ({ id, name, imageId }: Card) => {
     <Pressable onPress={handlePress}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {imageUrl.length !== 0 && (
-            <Image
-              source={{ uri: imageUrl }}
-              style={styles.image}
-              onLoadEnd={() => setLoading(false)}
-            />
-          )}
-          {loading && (
-            <View style={styles.loading}>
-              <Loading />
-            </View>
-          )}
+          <FastImage imageId={imageId} style={styles.image} />
         </View>
         <Text style={styles.text}>{name}</Text>
       </View>
@@ -62,12 +39,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: 180,
     height: 180,
-  },
-  loading: {
-    position: 'absolute',
-    top: '40%',
-    left: '40%',
-    zIndex: 1,
   },
   image: {
     borderRadius: 30,
