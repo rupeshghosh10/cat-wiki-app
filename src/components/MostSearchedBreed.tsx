@@ -1,44 +1,43 @@
+import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { Card } from '../interfaces';
+import useCatStore from '../store';
 import { colors, spacing } from '../themes';
 import CatCard from './CatCard';
 
-const data: Card[] = [
-  {
-    id: 'pers',
-    name: 'Persian',
-    imageId: '-Zfz5z2jK',
-  },
-  {
-    id: 'sava',
-    name: 'Savannah',
-    imageId: 'a8nIYvs6S',
-  },
-  {
-    id: 'sphy',
-    name: 'Sphynx',
-    imageId: 'KBroiVNCM',
-  },
-  {
-    id: 'ragd',
-    name: 'Ragdoll',
-    imageId: 'oGefY4YoG',
-  },
-];
+const mostSearchedBreeds = ['pers', 'sava', 'sphy', 'ragd'];
 
 const MostSearchedBreed = () => {
+  const [cards, setCards] = useState<Card[]>();
+
+  function makeCard(id: string): Card {
+    const cat = useCatStore.getState().cats.find((x) => x.id === id)!;
+    return {
+      id: cat.id,
+      imageId: cat.reference_image_id,
+      name: cat.name,
+    };
+  }
+
+  useEffect(() => {
+    const generatedCards = mostSearchedBreeds.map((x) => makeCard(x));
+    setCards(generatedCards);
+  }, [setCards]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Most Searched Breeds</Text>
-      <View>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <CatCard {...item} />}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-        />
-      </View>
+      {cards && cards.length !== 0 && (
+        <View>
+          <FlatList
+            data={cards}
+            renderItem={({ item }) => <CatCard {...item} />}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            columnWrapperStyle={styles.row}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
     marginLeft: spacing.xxs,
     textDecorationColor: colors.primary,
+    textDecorationLine: 'underline',
   },
   row: {
     flex: 1,

@@ -1,10 +1,12 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { StackParamList } from '../Main';
-import { getCat, getImage } from '../api';
+import { getImage } from '../api';
 import CatDescription from '../components/CatDescription';
+import Loading from '../components/Loading';
 import { Cat, CatImage } from '../interfaces';
+import useCatStore from '../store';
 import { colors, spacing } from '../themes';
 
 type Props = NativeStackScreenProps<StackParamList, 'CatDetails'>;
@@ -12,44 +14,35 @@ type Props = NativeStackScreenProps<StackParamList, 'CatDetails'>;
 const CatDetailsScreen = ({ route }: Props) => {
   const { id } = route.params;
 
-  const [imageUrl, setImageUrl] = useState<CatImage>();
+  const [image, setImage] = useState<CatImage>();
   const [catData, setCatData] = useState<Cat>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchCatData(id: string) {
-      const cat = await getCat(id);
-      setCatData(cat);
-    }
-    if (id !== '') {
-      fetchCatData(id);
-    }
+    const cat = useCatStore.getState().cats.find((x) => x.id === id);
+    setCatData(cat);
   }, [setCatData]);
 
   useEffect(() => {
     async function fetchImage(id: string) {
       const image = await getImage(id);
-      setImageUrl(image);
+      setImage(image);
     }
     if (catData) {
       fetchImage(catData.reference_image_id);
       setLoading(false);
     }
-  }, [setImageUrl, catData, setLoading]);
+  }, [setImage, catData, setLoading]);
 
   if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.secondary} />
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {imageUrl && <Image source={{ uri: imageUrl.url }} style={styles.image} />}
+          {image && <Image source={{ uri: image.url }} style={styles.image} />}
         </View>
         <View style={styles.descriptionContainer}>
           {catData && <CatDescription {...catData} />}
@@ -66,11 +59,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: spacing.sm,
     backgroundColor: colors.accent,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   imageContainer: {
     height: 300,
