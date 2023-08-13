@@ -1,41 +1,41 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Card } from '../interfaces/Card';
 import { colors } from '../themes/color';
-import CatCard from './CatCard';
 import { spacing } from '../themes/spacing';
+import CatCard from './CatCard';
 
-export interface Cat {
-  type: string;
-  url: string;
-}
-
-const data: Cat[] = [
+const data: Card[] = [
   {
-    type: 'Bengal',
-    url: '../assets/images/HomeImage.png',
+    id: 'pers',
+    name: 'Persian',
+    imageId: '-Zfz5z2jK',
   },
   {
-    type: 'Savannah',
-    url: '../assets/images/HomeImage.png',
+    id: 'sava',
+    name: 'Savannah',
+    imageId: 'a8nIYvs6S',
   },
   {
-    type: 'Korat',
-    url: '../assets/images/HomeImage.png',
+    id: 'sphy',
+    name: 'Sphynx',
+    imageId: 'KBroiVNCM',
   },
   {
-    type: 'Selkirk Rex',
-    url: '../assets/images/HomeImage.png',
+    id: 'ragd',
+    name: 'Ragdoll',
+    imageId: 'Rhj-JsTLP',
   },
 ];
 
 const MostSearchedBreed = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Most Searched Breed</Text>
+      <Text style={styles.title}>Most Searched Breeds</Text>
       <View>
         <FlatList
           data={data}
           renderItem={({ item }) => <CatCard {...item} />}
-          keyExtractor={(item) => item.type}
+          keyExtractor={(item) => item.id}
           numColumns={2}
           columnWrapperStyle={styles.row}
         />
@@ -47,17 +47,16 @@ const MostSearchedBreed = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.accent,
-    height: 500,
+    height: 510,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
   },
   title: {
     color: colors.primary,
-    fontWeight: '600',
-    fontSize: 22,
+    fontWeight: '700',
+    fontSize: 20,
     marginBottom: spacing.xs,
     marginLeft: spacing.xxs,
-    textDecorationLine: 'underline',
     textDecorationColor: colors.primary,
   },
   row: {

@@ -5,7 +5,7 @@ import Searchbar from '../components/Searchbar';
 import MostSearchedBreed from '../components/MostSearchedBreed';
 import { spacing } from '../themes/spacing';
 
-const Home = () => {
+const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchContainer}>
@@ -27,10 +27,11 @@ const styles = StyleSheet.create({
     margin: spacing.sm,
   },
   bodyContainer: {
-    margin: spacing.sm,
+    marginHorizontal: spacing.sm,
+    marginVertical: spacing.xs,
     borderRadius: 30,
     overflow: 'hidden',
   },
 });
 
-export default Home;
+export default HomeScreen;

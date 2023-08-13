@@ -5,7 +5,7 @@ import { spacing } from '../themes/spacing';
 const CatWikiHeader = () => {
   return (
     <View>
-      <ImageBackground source={require('../assets/images/HomeImage.png')} style={styles.image}>
+      <ImageBackground source={require('../../assets/images/HomeImage.png')} style={styles.image}>
         <View style={styles.textContainer}>
           <Text style={styles.textHeading}>Cat Wiki</Text>
           <Text style={styles.textContent}>Get to know more about your cat breed</Text>
@@ -17,7 +17,7 @@ const CatWikiHeader = () => {
 
 const styles = StyleSheet.create({
   image: {
-    height: 200,
+    height: 180,
     resizeMode: 'contain',
     backgroundColor: 'yellow',
   },
