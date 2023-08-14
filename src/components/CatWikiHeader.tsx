@@ -3,20 +3,18 @@ import { colors, spacing } from '../themes';
 
 const CatWikiHeader = () => {
   return (
-    <View>
-      <ImageBackground source={require('../../assets/images/HomeImage.png')} style={styles.image}>
-        <View style={styles.textContainer}>
-          <Text style={styles.textHeading}>Cat Wiki</Text>
-          <Text style={styles.textContent}>Get to know more about your cat breed</Text>
-        </View>
-      </ImageBackground>
-    </View>
+    <ImageBackground source={require('../../assets/images/HomeImage.png')} style={styles.image}>
+      <View style={styles.textContainer}>
+        <Text style={styles.textHeading}>Cat Wiki</Text>
+        <Text style={styles.textContent}>Get to know more about your cat breed</Text>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   image: {
-    height: 180,
+    flex: 2,
     resizeMode: 'contain',
     backgroundColor: 'yellow',
   },

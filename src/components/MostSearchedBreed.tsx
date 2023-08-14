@@ -22,15 +22,17 @@ const MostSearchedBreed = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Most Searched Breeds</Text>
-      {cats && cats.length !== 0 && <CatCardList cats={cats} />}
+      <View style={styles.listContainer}>
+        {cats && cats.length !== 0 && <CatCardList cats={cats} />}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 5,
     backgroundColor: colors.accent,
-    height: 510,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
   },
@@ -42,6 +44,11 @@ const styles = StyleSheet.create({
     marginLeft: spacing.xxs,
     textDecorationColor: colors.primary,
     textDecorationLine: 'underline',
+  },
+  listContainer: {
+    flex: 1,
+    borderRadius: 30,
+    overflow: 'hidden',
   },
 });
 

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import CatCardList from '../components/CatCardList';
 import Searchbar from '../components/Searchbar';
 import { Cat } from '../interfaces';
@@ -36,22 +35,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchContainer: {
-    margin: spacing.sm,
+    flex: 1,
+    marginHorizontal: spacing.sm,
+    justifyContent: 'center',
   },
   catsContainer: {
-    marginHorizontal: spacing.sm,
-    marginVertical: spacing.xxxs,
+    flex: 14,
+    margin: spacing.xs,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
     backgroundColor: colors.accent,
-    borderRadius: 40,
+    borderRadius: 30,
     overflow: 'hidden',
     height: 720,
   },
   listContainer: {
     flex: 1,
     marginVertical: spacing.xxs,
-    borderRadius: 40,
+    borderRadius: 30,
     overflow: 'hidden',
   },
   title: {

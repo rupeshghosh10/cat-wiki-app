@@ -1,8 +1,7 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { BottomTabParamsList } from '../BottomTabRoutes';
 import { getCats } from '../api';
 import CatWikiHeader from '../components/CatWikiHeader';
@@ -52,13 +51,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchContainer: {
-    margin: spacing.sm,
+    flex: 1,
+    marginHorizontal: spacing.sm,
+    justifyContent: 'center',
   },
   bodyContainer: {
-    marginHorizontal: spacing.sm,
-    marginVertical: spacing.xs,
+    flex: 14,
+    margin: spacing.xs,
     borderRadius: 30,
     overflow: 'hidden',
+    backgroundColor: 'pink',
   },
 });
 

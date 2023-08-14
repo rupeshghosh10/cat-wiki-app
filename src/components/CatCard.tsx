@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { StackParamList } from '../Main';
 import { colors, spacing } from '../themes';
 import FastImage from './FastImage';
@@ -11,6 +11,8 @@ interface CatCardProps {
   imageId: string;
 }
 
+const imageDimension = Dimensions.get('window').width * 0.43;
+
 const CatCard = ({ id, name, imageId }: CatCardProps) => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
@@ -19,13 +21,11 @@ const CatCard = ({ id, name, imageId }: CatCardProps) => {
   }
 
   return (
-    <Pressable onPress={handlePress}>
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <FastImage imageId={imageId} style={styles.image} />
-        </View>
-        <Text style={styles.text}>{name}</Text>
+    <Pressable onPress={handlePress} style={styles.container}>
+      <View style={styles.imageContainer}>
+        <FastImage imageId={imageId} style={styles.image} />
       </View>
+      <Text style={styles.text}>{name}</Text>
     </Pressable>
   );
 };
@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: colors.accent,
     borderRadius: 30,
-    width: 180,
-    height: 180,
+    width: imageDimension,
+    height: imageDimension,
   },
   image: {
     borderRadius: 30,
-    width: 180,
-    height: 180,
+    width: imageDimension,
+    height: imageDimension,
     resizeMode: 'cover',
   },
   text: {
