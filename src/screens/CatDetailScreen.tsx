@@ -2,6 +2,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { StackParamList } from '../Main';
+import { getImage } from '../api';
 import CatDescription from '../components/CatDescription';
 import FastImage from '../components/FastImage';
 import { Cat } from '../interfaces';
@@ -14,17 +15,37 @@ const CatDetailsScreen = ({ route }: Props) => {
   const { id, imageId } = route.params;
 
   const [catData, setCatData] = useState<Cat>();
+  const [imageOrientation, setImageOrientation] = useState<'Portrait' | 'Landscape'>('Landscape');
 
   useEffect(() => {
     const cat = useCatStore.getState().cats.find((x) => x.id === id);
     setCatData(cat);
   }, [setCatData]);
 
+  useEffect(() => {
+    async function loadImage() {
+      const catImage = await getImage(imageId);
+      setImageOrientation(catImage.height + 50 > catImage.width ? 'Portrait' : 'Landscape');
+    }
+    loadImage();
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <FastImage imageId={imageId} style={styles.image} />
+        <View
+          style={[
+            styles.imageContainer,
+            imageOrientation == 'Portrait' ? styles.portraitHeight : styles.landscapeHeight,
+          ]}
+        >
+          <FastImage
+            imageId={imageId}
+            style={[
+              styles.image,
+              imageOrientation == 'Portrait' ? styles.portraitHeight : styles.landscapeHeight,
+            ]}
+          />
         </View>
         <View style={styles.descriptionContainer}>
           {catData && <CatDescription {...catData} />}
@@ -43,12 +64,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accent,
   },
   imageContainer: {
-    height: 300,
     width: '100%',
+  },
+  landscapeHeight: {
+    height: 300,
+  },
+  portraitHeight: {
+    height: 450,
   },
   image: {
     resizeMode: 'cover',
-    height: 300,
     width: '100%',
   },
   descriptionContainer: {

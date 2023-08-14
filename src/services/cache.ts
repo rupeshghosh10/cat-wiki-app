@@ -4,7 +4,7 @@ export async function findImageInCache(imageId: string) {
   try {
     const info = await FileSystem.getInfoAsync(imageId);
     return info;
-  } catch (error) {
+  } catch {
     return {
       exists: false,
     };
@@ -19,7 +19,7 @@ export async function cacheImage(imageUrl: string, cacheUri: string) {
       cached: true,
       path: downloaded!.uri,
     };
-  } catch (error) {
+  } catch {
     return {
       cached: false,
     };
