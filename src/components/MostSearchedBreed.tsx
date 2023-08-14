@@ -1,43 +1,28 @@
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { Card } from '../interfaces';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Cat } from '../interfaces';
 import useCatStore from '../store';
 import { colors, spacing } from '../themes';
-import CatCard from './CatCard';
+import CatCardList from './CatCardList';
 
 const mostSearchedBreeds = ['pers', 'sava', 'sphy', 'ragd'];
 
 const MostSearchedBreed = () => {
-  const [cards, setCards] = useState<Card[]>();
+  const [cats, setCats] = useState<Cat[]>();
 
-  function makeCard(id: string): Card {
-    const cat = useCatStore.getState().cats.find((x) => x.id === id)!;
-    return {
-      id: cat.id,
-      imageId: cat.reference_image_id,
-      name: cat.name,
-    };
+  function getCat(id: string): Cat {
+    return useCatStore.getState().cats.find((x) => x.id === id)!;
   }
 
   useEffect(() => {
-    const generatedCards = mostSearchedBreeds.map((x) => makeCard(x));
-    setCards(generatedCards);
-  }, [setCards]);
+    const fetchedCats = mostSearchedBreeds.map((x) => getCat(x));
+    setCats(fetchedCats);
+  }, [setCats]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Most Searched Breeds</Text>
-      {cards && cards.length !== 0 && (
-        <View>
-          <FlatList
-            data={cards}
-            renderItem={({ item }) => <CatCard {...item} />}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            columnWrapperStyle={styles.row}
-          />
-        </View>
-      )}
+      <ScrollView>{cats && cats.length !== 0 && <CatCardList cats={cats} />}</ScrollView>
     </View>
   );
 };
@@ -57,10 +42,6 @@ const styles = StyleSheet.create({
     marginLeft: spacing.xxs,
     textDecorationColor: colors.primary,
     textDecorationLine: 'underline',
-  },
-  row: {
-    flex: 1,
-    justifyContent: 'space-between',
   },
 });
 

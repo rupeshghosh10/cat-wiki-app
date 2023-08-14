@@ -2,11 +2,16 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { StackParamList } from '../Main';
-import { Card } from '../interfaces';
 import { colors, spacing } from '../themes';
 import FastImage from './FastImage';
 
-const CatCard = ({ id, name, imageId }: Card) => {
+interface CatCardProps {
+  id: string;
+  name: string;
+  imageId: string;
+}
+
+const CatCard = ({ id, name, imageId }: CatCardProps) => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
   function handlePress() {
