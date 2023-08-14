@@ -3,7 +3,11 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import { useSearchStore } from '../store';
 import { colors, spacing } from '../themes';
 
-const SearchBar = () => {
+interface SearchBarProps {
+  onSubmit?: () => void;
+}
+
+const SearchBar = ({ onSubmit = () => {} }: SearchBarProps) => {
   const { text, update, clear } = useSearchStore();
 
   return (
@@ -15,6 +19,7 @@ const SearchBar = () => {
         value={text}
         autoFocus={false}
         onChangeText={(text) => update(text)}
+        onSubmitEditing={onSubmit}
       />
       {text && text.length !== 0 && (
         <FontAwesome

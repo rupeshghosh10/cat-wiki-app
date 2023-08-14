@@ -9,13 +9,12 @@ import CatWikiHeader from '../components/CatWikiHeader';
 import Loading from '../components/Loading';
 import MostSearchedBreed from '../components/MostSearchedBreed';
 import Searchbar from '../components/Searchbar';
-import { useCatStore, useSearchStore } from '../store';
+import { useCatStore } from '../store';
 import { spacing } from '../themes';
 
 const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
 
-  const searchText = useSearchStore((state) => state.text);
   const populateCats = useCatStore((state) => state.populateCats);
 
   const navigation = useNavigation<BottomTabNavigationProp<BottomTabParamsList>>();
@@ -31,12 +30,6 @@ const HomeScreen = () => {
     }
   }, [setLoading, loading]);
 
-  useEffect(() => {
-    if (searchText !== '') {
-      navigation.navigate('CatList');
-    }
-  }, [searchText]);
-
   if (loading) {
     return <Loading />;
   }
@@ -44,7 +37,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchContainer}>
-        <Searchbar />
+        <Searchbar onSubmit={() => navigation.navigate('CatList')} />
       </View>
       <View style={styles.bodyContainer}>
         <CatWikiHeader />
