@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import CatCardList from '../components/CatCardList';
 import Searchbar from '../components/Searchbar';
 import { Cat } from '../interfaces';
