@@ -9,7 +9,7 @@ import CatWikiHeader from '../components/CatWikiHeader';
 import Loading from '../components/Loading';
 import MostSearchedBreed from '../components/MostSearchedBreed';
 import Searchbar from '../components/Searchbar';
-import { useCatStore } from '../stores';
+import { useCatStore, useSearchStore } from '../stores';
 import { spacing } from '../themes';
 
 const HomeScreen = () => {
@@ -30,6 +30,12 @@ const HomeScreen = () => {
     }
   }, [setLoading, loading]);
 
+  function handleSubmit() {
+    if (useSearchStore.getState().text !== '') {
+      navigation.navigate('CatList');
+    }
+  }
+
   if (loading) {
     return <Loading />;
   }
@@ -37,7 +43,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchContainer}>
-        <Searchbar onSubmit={() => navigation.navigate('CatList')} />
+        <Searchbar onSubmit={handleSubmit} />
       </View>
       <View style={styles.bodyContainer}>
         <CatWikiHeader />
