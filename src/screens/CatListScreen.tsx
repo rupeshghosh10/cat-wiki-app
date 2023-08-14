@@ -1,59 +1,25 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CatCard from '../components/CatCard';
+import CatCardList from '../components/CatCardList';
 import { Cat } from '../interfaces';
 import useCatStore from '../store';
 import { colors, spacing } from '../themes';
 
 const CatListScreen = () => {
   const [cats, setCats] = useState<Cat[]>();
-  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const cats = useCatStore.getState().cats.slice(index * 6, (index + 1) * 6);
+    const cats = useCatStore.getState().cats;
     setCats(cats);
-  }, [index, setCats]);
+  }, [setCats]);
 
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.innerContainer}>
         <Text style={styles.title}>66+ Breeds for you to discover</Text>
-        {cats && cats.length !== 0 && (
-          <View>
-            <FlatList
-              data={cats}
-              renderItem={({ item }) => (
-                <CatCard id={item.id} imageId={item.reference_image_id} name={item.name} />
-              )}
-              keyExtractor={(item) => item.id}
-              numColumns={2}
-              columnWrapperStyle={styles.row}
-            />
-          </View>
-        )}
-        <View style={styles.navigationContainer}>
-          {index === 0 && <Ionicons name="chevron-back-outline" size={46} color={colors.gray} />}
-          {index > 0 && (
-            <Ionicons
-              name="chevron-back-outline"
-              size={46}
-              color={colors.secondary}
-              onPress={() => {
-                setIndex(index - 1);
-              }}
-            />
-          )}
-          {index === 11 && <Ionicons name="chevron-forward-sharp" size={46} color={colors.gray} />}
-          {index < 11 && (
-            <Ionicons
-              name="chevron-forward-sharp"
-              size={46}
-              color={colors.primary}
-              onPress={() => setIndex(index + 1)}
-            />
-          )}
+        <View style={styles.listContainer}>
+          {cats && cats.length !== 0 && <CatCardList cats={cats} />}
         </View>
       </View>
     </SafeAreaView>
@@ -62,10 +28,21 @@ const CatListScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  innerContainer: {
     marginHorizontal: spacing.sm,
-    marginVertical: spacing.xxs,
-    padding: spacing.sm,
+    marginVertical: spacing.xxxs,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
     backgroundColor: colors.accent,
+    borderRadius: 40,
+    overflow: 'hidden',
+    flex: 1,
+  },
+  listContainer: {
+    flex: 1,
+    marginVertical: spacing.xxs,
     borderRadius: 40,
     overflow: 'hidden',
   },
@@ -75,15 +52,6 @@ const styles = StyleSheet.create({
     color: colors.primary,
     marginBottom: spacing.sm,
     alignSelf: 'center',
-  },
-  row: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  navigationContainer: {
-    marginTop: spacing.xs,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
   },
 });
 

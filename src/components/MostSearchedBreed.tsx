@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Cat } from '../interfaces';
 import useCatStore from '../store';
 import { colors, spacing } from '../themes';
@@ -22,7 +22,7 @@ const MostSearchedBreed = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Most Searched Breeds</Text>
-      <ScrollView>{cats && cats.length !== 0 && <CatCardList cats={cats} />}</ScrollView>
+      {cats && cats.length !== 0 && <CatCardList cats={cats} />}
     </View>
   );
 };

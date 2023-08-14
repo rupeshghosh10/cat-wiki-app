@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { Cat } from '../interfaces';
 import CatCard from './CatCard';
 
@@ -8,18 +8,21 @@ interface CatCardListProps {
 
 const CatCardList = ({ cats }: CatCardListProps) => {
   return (
-    <View style={styles.container}>
-      {cats.map((cat) => (
-        <CatCard id={cat.id} imageId={cat.reference_image_id} name={cat.name} key={cat.id} />
-      ))}
-    </View>
+    <FlatList
+      data={cats}
+      renderItem={({ item }) => (
+        <CatCard id={item.id} imageId={item.reference_image_id} name={item.name} />
+      )}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+      columnWrapperStyle={styles.row}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  row: {
+    flex: 1,
     justifyContent: 'space-between',
   },
 });

@@ -2,7 +2,7 @@ import * as FileSystem from 'expo-file-system';
 import { useEffect, useState } from 'react';
 import { Image, ImageStyle, StyleProp } from 'react-native';
 import { getImage } from '../api';
-import { cacheImage, findImageInCache } from '../utils';
+import { cacheImage, findImageInCache } from '../service';
 import Loading from './Loading';
 
 interface FastImageProps {

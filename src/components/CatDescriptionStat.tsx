@@ -28,7 +28,7 @@ const CatDescriptionStat = ({ title, value }: CatDescriptionStatProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: spacing.md,
+    marginTop: spacing.sm,
   },
   title: {
     color: colors.secondary,
