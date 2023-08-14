@@ -1,40 +1,30 @@
 import { FontAwesome } from '@expo/vector-icons';
-import { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { colors, spacing } from '../themes';
-import { useNavigation } from '@react-navigation/native';
-import { BottomTabParamsList } from '../BottomTabRoutes';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
-const searchBar = () => {
-  const [searchText, setSearchText] = useState('');
+interface SearchBarProps {
+  value: string;
+  onChangeText: (text: string) => void;
+}
 
-  const navigation = useNavigation<BottomTabNavigationProp<BottomTabParamsList>>();
-
-  function handleFocus() {
-    if (searchText !== '') {
-      navigation.navigate('Search');
-    }
-  }
-
+const SearchBar = ({ value, onChangeText }: SearchBarProps) => {
   return (
     <View style={styles.container}>
       <FontAwesome name="search" size={24} color={colors.primary} style={styles.searchIcon} />
       <TextInput
         placeholder="Search"
         style={styles.searchBar}
-        value={searchText}
+        value={value}
         autoFocus={false}
-        onChangeText={(text) => setSearchText(text)}
-        onFocus={handleFocus}
+        onChangeText={onChangeText}
       />
-      {searchText.length !== 0 && (
+      {value && value.length !== 0 && (
         <FontAwesome
           name="close"
           size={24}
           color={colors.primary}
           style={styles.cancelIcon}
-          onPress={() => setSearchText('')}
+          onPress={() => onChangeText('')}
         />
       )}
     </View>
@@ -63,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default searchBar;
+export default SearchBar;
