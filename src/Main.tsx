@@ -7,7 +7,7 @@ import { colors } from './themes';
 
 export type StackParamList = {
   Main: undefined;
-  CatDetails: { id: string; name: string };
+  CatDetails: { id: string; imageId: string; name: string };
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -32,7 +32,7 @@ const Main = () => {
           <Stack.Screen
             name="CatDetails"
             component={CatDetailsScreen}
-            initialParams={{ id: '' }}
+            initialParams={{ id: '', imageId: '' }}
             options={({ route }) => ({ title: route.params.name })}
           />
         </Stack.Navigator>

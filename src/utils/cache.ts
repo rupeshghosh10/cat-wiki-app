@@ -13,7 +13,7 @@ export async function findImageInCache(imageId: string) {
 
 export async function cacheImage(imageUrl: string, cacheUri: string) {
   try {
-    const downloadImage = FileSystem.createDownloadResumable(imageUrl, cacheUri, {});
+    const downloadImage = FileSystem.createDownloadResumable(imageUrl, cacheUri);
     const downloaded = await downloadImage.downloadAsync();
     return {
       cached: true,

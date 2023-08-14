@@ -1,48 +1,30 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { StackParamList } from '../Main';
-import { getImage } from '../api';
 import CatDescription from '../components/CatDescription';
-import Loading from '../components/Loading';
-import { Cat, CatImage } from '../interfaces';
+import FastImage from '../components/FastImage';
+import { Cat } from '../interfaces';
 import useCatStore from '../store';
 import { colors, spacing } from '../themes';
 
 type Props = NativeStackScreenProps<StackParamList, 'CatDetails'>;
 
 const CatDetailsScreen = ({ route }: Props) => {
-  const { id } = route.params;
+  const { id, imageId } = route.params;
 
-  const [image, setImage] = useState<CatImage>();
   const [catData, setCatData] = useState<Cat>();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cat = useCatStore.getState().cats.find((x) => x.id === id);
     setCatData(cat);
   }, [setCatData]);
 
-  useEffect(() => {
-    async function fetchImage(id: string) {
-      const image = await getImage(id);
-      setImage(image);
-    }
-    if (catData) {
-      fetchImage(catData.reference_image_id);
-      setLoading(false);
-    }
-  }, [setImage, catData, setLoading]);
-
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {image && <Image source={{ uri: image.url }} style={styles.image} />}
+          <FastImage imageId={imageId} style={styles.image} />
         </View>
         <View style={styles.descriptionContainer}>
           {catData && <CatDescription {...catData} />}

@@ -10,7 +10,7 @@ const CatCard = ({ id, name, imageId }: Card) => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
   function handlePress() {
-    navigation.navigate('CatDetails', { id: id, name: name });
+    navigation.navigate('CatDetails', { id: id, imageId: imageId, name: name });
   }
 
   return (
