@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomTabParamsList } from '../BottomTabRoutes';
 import { getCats } from '../api';
+import AndroidKeyboardAvoidingView from '../components/AndroidKeyboardAvoidingView';
 import CatWikiHeader from '../components/CatWikiHeader';
 import Loading from '../components/Loading';
 import MostSearchedBreed from '../components/MostSearchedBreed';
@@ -42,13 +43,15 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
-        <Searchbar onSubmit={handleSubmit} />
-      </View>
-      <View style={styles.bodyContainer}>
-        <CatWikiHeader />
-        <MostSearchedBreed />
-      </View>
+      <AndroidKeyboardAvoidingView>
+        <View style={styles.searchContainer}>
+          <Searchbar onSubmit={handleSubmit} />
+        </View>
+        <View style={styles.bodyContainer}>
+          <CatWikiHeader />
+          <MostSearchedBreed />
+        </View>
+      </AndroidKeyboardAvoidingView>
     </SafeAreaView>
   );
 };

@@ -6,6 +6,7 @@ import Searchbar from '../components/Searchbar';
 import { Cat } from '../interfaces';
 import { useCatStore, useSearchStore } from '../stores';
 import { colors, spacing } from '../themes';
+import AndroidKeyboardAvoidingView from '../components/AndroidKeyboardAvoidingView';
 
 const CatListScreen = () => {
   const [cats, setCats] = useState<Cat[]>();
@@ -18,15 +19,17 @@ const CatListScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
-        <Searchbar />
-      </View>
-      <View style={styles.catsContainer}>
-        <Text style={styles.title}>66+ Breeds for you to discover</Text>
-        <View style={styles.listContainer}>
-          {cats && cats.length !== 0 && <CatCardList cats={cats} />}
+      <AndroidKeyboardAvoidingView>
+        <View style={styles.searchContainer}>
+          <Searchbar />
         </View>
-      </View>
+        <View style={styles.catsContainer}>
+          <Text style={styles.title}>66+ Breeds for you to discover</Text>
+          <View style={styles.listContainer}>
+            {cats && cats.length !== 0 && <CatCardList cats={cats} />}
+          </View>
+        </View>
+      </AndroidKeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -38,13 +41,13 @@ const styles = StyleSheet.create({
   searchContainer: {
     flex: 1,
     marginHorizontal: spacing.sm,
+    marginVertical: spacing.xxxs,
     justifyContent: 'center',
   },
   catsContainer: {
     flex: 14,
     margin: spacing.xs,
     paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
     backgroundColor: colors.accent,
     borderRadius: 30,
     overflow: 'hidden',
@@ -52,14 +55,15 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
-    marginVertical: spacing.xxs,
+    marginBottom: spacing.xxs,
     borderRadius: 30,
     overflow: 'hidden',
   },
   title: {
     fontWeight: '700',
-    fontSize: 24,
+    fontSize: 20,
     color: colors.primary,
+    marginTop: spacing.xxs,
     marginBottom: spacing.xxxs,
     alignSelf: 'center',
   },
