@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CatCardList from '../components/CatCardList';
 import Searchbar from '../components/Searchbar';
 import { Cat } from '../interfaces';
-import { useCatStore, useSearchStore } from '../store';
+import { useCatStore, useSearchStore } from '../stores';
 import { colors, spacing } from '../themes';
 
 const CatListScreen = () => {

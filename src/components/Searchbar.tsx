@@ -1,6 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { useSearchStore } from '../store';
+import { useSearchStore } from '../stores';
 import { colors, spacing } from '../themes';
 
 interface SearchBarProps {

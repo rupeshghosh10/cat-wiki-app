@@ -5,7 +5,7 @@ import { StackParamList } from '../Main';
 import CatDescription from '../components/CatDescription';
 import FastImage from '../components/FastImage';
 import { Cat } from '../interfaces';
-import { useCatStore } from '../store';
+import { useCatStore } from '../stores';
 import { colors, spacing } from '../themes';
 
 type Props = NativeStackScreenProps<StackParamList, 'CatDetails'>;

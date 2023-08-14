@@ -9,7 +9,7 @@ import CatWikiHeader from '../components/CatWikiHeader';
 import Loading from '../components/Loading';
 import MostSearchedBreed from '../components/MostSearchedBreed';
 import Searchbar from '../components/Searchbar';
-import { useCatStore } from '../store';
+import { useCatStore } from '../stores';
 import { spacing } from '../themes';
 
 const HomeScreen = () => {

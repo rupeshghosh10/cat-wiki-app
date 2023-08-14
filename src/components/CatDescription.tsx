@@ -9,7 +9,7 @@ const CatDescription = (cat: Cat) => {
     <View>
       <Text style={styles.name}>{cat.name}</Text>
       <Text style={styles.description}>{cat.description}</Text>
-      {cat.alt_names.length !== 0 && (
+      {cat.alt_names && cat.alt_names.length !== 0 && (
         <CatDescriptionItem title="Alternate Names" description={cat.alt_names} />
       )}
       <CatDescriptionItem title="Temperament" description={cat.temperament} />
