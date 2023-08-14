@@ -1,30 +1,28 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, TextInput, View } from 'react-native';
+import { useSearchStore } from '../store';
 import { colors, spacing } from '../themes';
 
-interface SearchBarProps {
-  value: string;
-  onChangeText: (text: string) => void;
-}
+const SearchBar = () => {
+  const { text, update, clear } = useSearchStore();
 
-const SearchBar = ({ value, onChangeText }: SearchBarProps) => {
   return (
     <View style={styles.container}>
       <FontAwesome name="search" size={24} color={colors.primary} style={styles.searchIcon} />
       <TextInput
         placeholder="Search"
         style={styles.searchBar}
-        value={value}
+        value={text}
         autoFocus={false}
-        onChangeText={onChangeText}
+        onChangeText={(text) => update(text)}
       />
-      {value && value.length !== 0 && (
+      {text && text.length !== 0 && (
         <FontAwesome
           name="close"
           size={24}
           color={colors.primary}
           style={styles.cancelIcon}
-          onPress={() => onChangeText('')}
+          onPress={() => clear()}
         />
       )}
     </View>

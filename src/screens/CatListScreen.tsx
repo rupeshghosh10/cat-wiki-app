@@ -4,12 +4,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CatCardList from '../components/CatCardList';
 import Searchbar from '../components/Searchbar';
 import { Cat } from '../interfaces';
-import { useCatStore } from '../store';
+import { useCatStore, useSearchStore } from '../store';
 import { colors, spacing } from '../themes';
 
 const CatListScreen = () => {
   const [cats, setCats] = useState<Cat[]>();
-  const [searchText, setSearchText] = useState('');
+  const searchText = useSearchStore((state) => state.text);
 
   useEffect(() => {
     const storeCats = useCatStore.getState().cats;
@@ -19,7 +19,7 @@ const CatListScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchContainer}>
-        <Searchbar value={searchText} onChangeText={(text) => setSearchText(text)} />
+        <Searchbar />
       </View>
       <View style={styles.catsContainer}>
         <Text style={styles.title}>66+ Breeds for you to discover</Text>
