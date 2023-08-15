@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { StackParamList } from '../Main';
+import { useImageStyle } from '../hooks';
 import { Cat } from '../interfaces';
 import { colors, spacing } from '../themes';
 import FastImage from './FastImage';
@@ -15,6 +16,8 @@ interface MostSearchedCardProps {
 const MostSearchedCard = ({ index, cat }: MostSearchedCardProps) => {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
+  const imageStyles = useImageStyle(cat.reference_image_id);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
@@ -22,7 +25,7 @@ const MostSearchedCard = ({ index, cat }: MostSearchedCardProps) => {
       </Text>
       <Text style={styles.content}>{cat.description}</Text>
       <View style={styles.imageContainer}>
-        <FastImage imageId={cat.reference_image_id} style={styles.image} />
+        <FastImage imageId={cat.reference_image_id} style={imageStyles.image} />
       </View>
       <Pressable
         style={styles.readMoreContainer}
@@ -44,10 +47,6 @@ const MostSearchedCard = ({ index, cat }: MostSearchedCardProps) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: spacing.md,
-  },
-  image: {
-    width: '100%',
-    height: 350,
   },
   imageContainer: {
     borderRadius: 30,
