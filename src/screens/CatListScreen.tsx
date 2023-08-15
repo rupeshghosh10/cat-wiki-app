@@ -24,7 +24,11 @@ const CatListScreen = () => {
           <Searchbar />
         </View>
         <View style={styles.catsContainer}>
-          <Text style={styles.title}>66+ Breeds for you to discover</Text>
+          {searchText.length === 0 ? (
+            <Text style={styles.title}>66+ Breeds for you to discover</Text>
+          ) : (
+            <Text style={styles.title}>Search Result</Text>
+          )}
           <View style={styles.listContainer}>
             {cats && cats.length !== 0 && <CatCardList cats={cats} />}
           </View>

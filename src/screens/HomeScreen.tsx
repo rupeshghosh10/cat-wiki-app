@@ -7,8 +7,8 @@ import { BottomTabParamsList } from '../BottomTabRoutes';
 import { getCats } from '../api';
 import AndroidKeyboardAvoidingView from '../components/AndroidKeyboardAvoidingView';
 import CatWikiHeader from '../components/CatWikiHeader';
+import HomeScreenBody from '../components/HomeScreenBody';
 import Loading from '../components/Loading';
-import MostSearchedBreed from '../components/MostSearchedBreed';
 import Searchbar from '../components/Searchbar';
 import { useCatStore, useSearchStore } from '../stores';
 import { spacing } from '../themes';
@@ -49,7 +49,7 @@ const HomeScreen = () => {
         </View>
         <View style={styles.bodyContainer}>
           <CatWikiHeader />
-          <MostSearchedBreed />
+          <HomeScreenBody />
         </View>
       </AndroidKeyboardAvoidingView>
     </SafeAreaView>

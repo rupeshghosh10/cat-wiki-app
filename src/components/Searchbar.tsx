@@ -18,7 +18,7 @@ const SearchBar = ({ onSubmit = () => {} }: SearchBarProps) => {
         style={styles.searchBar}
         value={text}
         autoFocus={false}
-        onChangeText={(text) => update(text)}
+        onChangeText={(text) => update(text.trim())}
         onSubmitEditing={onSubmit}
       />
       {text && text.length !== 0 && (
