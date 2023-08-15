@@ -16,10 +16,11 @@ export function useImageStyle(imageId: string) {
         Image.getSize(image.uri!, (width, height) => {
           setDimensions({ width, height });
         });
-      } else {
-        const image = await getImage(imageId);
-        setDimensions({ width: image.width, height: image.height });
+        return;
       }
+      const response = await getImage(imageId);
+      if (response.error) return;
+      setDimensions({ width: response.image!.width, height: response.image!.height });
     }
     if (imageId) {
       loadImage(imageId);

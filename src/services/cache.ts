@@ -13,7 +13,7 @@ export async function findImageInCache(imageId: string): Promise<ImageSource> {
   try {
     const fileUri = getImageUri(imageId);
     const info = await FileSystem.getInfoAsync(fileUri);
-    return { uri: info.uri, exists: true };
+    return { uri: info.uri, exists: info.exists };
   } catch {
     return {
       exists: false,

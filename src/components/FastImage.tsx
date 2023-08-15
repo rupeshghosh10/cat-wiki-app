@@ -11,39 +11,33 @@ interface FastImageProps {
 
 const FastImage = ({ imageId, style }: FastImageProps) => {
   const [imageSource, setImageSource] = useState('');
-
-  async function fetchImageUrl(imageId: string) {
-    try {
-      const image = await getImage(imageId);
-      return {
-        imageUrl: image.url,
-        fetched: true,
-      };
-    } catch (error) {
-      return {
-        fetched: false,
-      };
-    }
-  }
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function loadImage() {
       const imageInCache = await findImageInCache(imageId);
       if (imageInCache.exists) {
         setImageSource(imageInCache.uri!);
-      } else {
-        const fetchedImage = await fetchImageUrl(imageId);
-        if (!fetchedImage.fetched) {
-          return;
-        }
-        const cached = await cacheImage(fetchedImage.imageUrl!, imageId);
-        if (cached.cached) {
-          setImageSource(cached.path!);
-        }
+        return;
       }
+      const fetchedImage = await getImage(imageId);
+      if (fetchedImage.error) {
+        setError(true);
+        return;
+      }
+      const cachedImage = await cacheImage(fetchedImage.image!.url!, imageId);
+      if (cachedImage.cached) {
+        setImageSource(cachedImage.path!);
+        return;
+      }
+      setError(true);
     }
     loadImage();
   }, []);
+
+  if (error) {
+    return <Image source={require('../../assets/images/Error.png')} style={style} />;
+  }
 
   return (
     <>
