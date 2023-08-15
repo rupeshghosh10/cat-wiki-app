@@ -1,9 +1,19 @@
 import * as FileSystem from 'expo-file-system';
 
-export async function findImageInCache(imageId: string) {
+interface ImageSource {
+  uri?: string;
+  exists: boolean;
+}
+
+function getImageUri(imageId: string) {
+  return `${FileSystem.cacheDirectory}${imageId}.jpg`;
+}
+
+export async function findImageInCache(imageId: string): Promise<ImageSource> {
   try {
-    const info = await FileSystem.getInfoAsync(imageId);
-    return info;
+    const fileUri = getImageUri(imageId);
+    const info = await FileSystem.getInfoAsync(fileUri);
+    return { uri: info.uri, exists: true };
   } catch {
     return {
       exists: false,
@@ -11,8 +21,9 @@ export async function findImageInCache(imageId: string) {
   }
 }
 
-export async function cacheImage(imageUrl: string, cacheUri: string) {
+export async function cacheImage(imageUrl: string, imageId: string) {
   try {
+    const cacheUri = getImageUri(imageId);
     const downloadImage = FileSystem.createDownloadResumable(imageUrl, cacheUri);
     const downloaded = await downloadImage.downloadAsync();
     return {

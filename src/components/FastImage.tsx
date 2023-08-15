@@ -1,4 +1,3 @@
-import * as FileSystem from 'expo-file-system';
 import { useEffect, useState } from 'react';
 import { Image, ImageStyle, StyleProp } from 'react-native';
 import { getImage } from '../api';
@@ -29,16 +28,15 @@ const FastImage = ({ imageId, style }: FastImageProps) => {
 
   useEffect(() => {
     async function loadImage() {
-      const cacheFileUri = `${FileSystem.cacheDirectory}${imageId}.jpg`;
-      const imageInCache = await findImageInCache(cacheFileUri);
+      const imageInCache = await findImageInCache(imageId);
       if (imageInCache.exists) {
-        setImageSource(cacheFileUri);
+        setImageSource(imageInCache.uri!);
       } else {
-        const image = await fetchImageUrl(imageId);
-        if (!image.fetched) {
+        const fetchedImage = await fetchImageUrl(imageId);
+        if (!fetchedImage.fetched) {
           return;
         }
-        const cached = await cacheImage(image.imageUrl!, cacheFileUri);
+        const cached = await cacheImage(fetchedImage.imageUrl!, imageId);
         if (cached.cached) {
           setImageSource(cached.path!);
         }
@@ -49,7 +47,7 @@ const FastImage = ({ imageId, style }: FastImageProps) => {
 
   return (
     <>
-      {imageSource.length !== 0 ? (
+      {imageSource && imageSource.length !== 0 ? (
         <Image source={{ uri: imageSource }} style={style} />
       ) : (
         <Loading />
