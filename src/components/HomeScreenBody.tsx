@@ -2,12 +2,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { BottomTabParamsList } from '../BottomTabRoutes';
 import { Cat } from '../interfaces';
 import { useCatStore } from '../stores';
 import { colors, spacing } from '../themes';
-import CatCardList from './CatCardList';
+import CatCard from './CatCard';
 
 const homeScreenBreeds = ['pers', 'sava', 'sphy', 'acur'];
 
@@ -32,9 +32,14 @@ const HomeScreenBody = () => {
         <Text style={styles.seeMore}>See More</Text>
         <Ionicons name="arrow-forward-sharp" size={18} color="black" />
       </Pressable>
-      <View style={styles.listContainer}>
-        {cats && cats.length !== 0 && <CatCardList cats={cats} />}
-      </View>
+      <ScrollView>
+        <View style={styles.listContainer}>
+          {cats &&
+            cats.map((cat) => (
+              <CatCard key={cat.id} id={cat.id} imageId={cat.reference_image_id} name={cat.name} />
+            ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -66,6 +71,9 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 30,
     overflow: 'hidden',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
 });
 

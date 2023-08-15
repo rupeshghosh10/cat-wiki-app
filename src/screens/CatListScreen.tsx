@@ -1,20 +1,26 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CatCardList from '../components/CatCardList';
+import AndroidKeyboardAvoidingView from '../components/AndroidKeyboardAvoidingView';
+import CatCard from '../components/CatCard';
 import Searchbar from '../components/Searchbar';
 import { Cat } from '../interfaces';
 import { useCatStore, useSearchStore } from '../stores';
 import { colors, spacing } from '../themes';
-import AndroidKeyboardAvoidingView from '../components/AndroidKeyboardAvoidingView';
 
 const CatListScreen = () => {
+  const scrollRef = useRef<ScrollView>(null);
+
   const [cats, setCats] = useState<Cat[]>();
   const searchText = useSearchStore((state) => state.text);
 
   useEffect(() => {
     const storeCats = useCatStore.getState().cats;
     setCats(storeCats.filter((x) => x.name.toLowerCase().includes(searchText.toLowerCase())));
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
   }, [searchText, setCats]);
 
   return (
@@ -24,14 +30,24 @@ const CatListScreen = () => {
           <Searchbar />
         </View>
         <View style={styles.catsContainer}>
-          {searchText.length === 0 ? (
-            <Text style={styles.title}>66+ Breeds for you to discover</Text>
-          ) : (
-            <Text style={styles.title}>Search Result</Text>
-          )}
-          <View style={styles.listContainer}>
-            {cats && cats.length !== 0 && <CatCardList cats={cats} />}
-          </View>
+          <ScrollView style={styles.container} ref={scrollRef}>
+            {searchText.length === 0 ? (
+              <Text style={styles.title}>66+ Breeds for you to discover</Text>
+            ) : (
+              <Text style={styles.title}>Search Result</Text>
+            )}
+            <View style={styles.listContainer}>
+              {cats &&
+                cats.map((cat) => (
+                  <CatCard
+                    key={cat.id}
+                    id={cat.id}
+                    imageId={cat.reference_image_id}
+                    name={cat.name}
+                  />
+                ))}
+            </View>
+          </ScrollView>
         </View>
       </AndroidKeyboardAvoidingView>
     </SafeAreaView>
@@ -51,17 +67,13 @@ const styles = StyleSheet.create({
   catsContainer: {
     flex: 14,
     margin: spacing.xs,
-    paddingHorizontal: spacing.sm,
-    backgroundColor: colors.accent,
-    borderRadius: 30,
-    overflow: 'hidden',
-    height: 720,
   },
   listContainer: {
     flex: 1,
     marginBottom: spacing.xxs,
-    borderRadius: 30,
-    overflow: 'hidden',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
   },
   title: {
     fontWeight: '700',
