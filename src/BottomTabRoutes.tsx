@@ -1,9 +1,14 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useEffect, useState } from 'react';
+import { getCats } from './api';
+import Loading from './components/Loading';
 import CatListScreen from './screens/CatListScreen';
+import ErrorScreen from './screens/ErrorScreen';
 import HomeScreen from './screens/HomeScreen';
-import { colors } from './themes/color';
 import MostSearchedBreed from './screens/MostSearchedBreed';
+import { useCatStore } from './stores';
+import { colors } from './themes/color';
 
 export type BottomTabParamsList = {
   Home: undefined;
@@ -14,6 +19,34 @@ export type BottomTabParamsList = {
 const BottomTab = createBottomTabNavigator<BottomTabParamsList>();
 
 const BottomTabRoutes = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const populateCats = useCatStore((state) => state.populateCats);
+
+  useEffect(() => {
+    async function fetchCats() {
+      const response = await getCats();
+      if (response.error) {
+        setError(response.error);
+      } else {
+        populateCats(response.cats!);
+      }
+      setLoading(false);
+    }
+    if (loading) {
+      fetchCats();
+    }
+  }, [setLoading, loading, setError]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorScreen onRetry={() => setLoading(true)} />;
+  }
+
   return (
     <BottomTab.Navigator
       screenOptions={{
