@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     overflow: 'hidden',
     alignItems: 'center',
-    margin: spacing.sm,
+    margin: spacing.xs,
     backgroundColor: colors.accent,
   },
   descriptionContainer: {

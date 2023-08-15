@@ -1,6 +1,7 @@
 import { useFonts } from 'expo-font';
 import { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import MostSearchedCard from '../components/MostSearchedCard';
 import { Cat } from '../interfaces';
 import { useCatStore } from '../stores';
@@ -56,8 +57,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.primary,
-    fontSize: 26,
-    alignSelf: 'center',
+    fontSize: 24,
+    textAlign: 'center',
   },
   borelFont: {
     fontFamily: 'Borel',
